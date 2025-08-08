@@ -10,6 +10,11 @@
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
     rel="stylesheet"
   />
+  <!-- Font Awesome for Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"
+  />
 
   <style>
     :root {
@@ -19,24 +24,17 @@
       --neon-magenta: #ff00ff;
       --text-color: #e0e0e0;
     }
-
-    /* Reset & Box-Sizing */
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
       background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
       color: var(--text-color);
       font-family: 'Orbitron', sans-serif;
-      overflow: hidden;
+      overflow-y: auto;
     }
-
-    /* Fixed Header */
     header {
       position: fixed;
       top: 0; left: 0;
@@ -49,15 +47,11 @@
       background: rgba(0, 0, 0, 0.3);
       z-index: 1000;
     }
-
-    /* Simpsons GIF */
     .logo img {
       width: 80px;
       border-radius: 8px;
       box-shadow: 0 0 10px var(--neon-cyan);
     }
-
-    /* Nav Links */
     nav a {
       margin-left: 1.2rem;
       color: var(--neon-cyan);
@@ -70,8 +64,6 @@
       color: #ffffff;
       text-shadow: 0 0 12px var(--neon-magenta);
     }
-
-    /* Configure/Reset Buttons */
     .header-buttons button {
       margin-left: 1rem;
       padding: 6px 12px;
@@ -89,26 +81,28 @@
       background: var(--neon-cyan);
       box-shadow: 0 0 12px var(--neon-cyan);
     }
-
-    /* Main Content */
     main {
-      height: 100vh;
+      margin-top: 100px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
-      padding: 0 20px;
+      padding: 20px;
     }
-
-    /* Equation Styling */
+    .intro {
+      max-width: 800px;
+      text-align: left;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+    .intro h2 {
+      color: var(--neon-cyan);
+      margin-bottom: 0.5rem;
+    }
     .equation {
       font-size: 2rem;
       margin-bottom: 2rem;
       text-shadow: 0 0 10px var(--neon-magenta);
     }
-
-    /* Chart Container */
     .chart-container {
       width: 90vw;
       max-width: 800px;
@@ -118,10 +112,8 @@
       border-radius: 8px;
       box-shadow: 0 0 20px var(--neon-cyan);
       backdrop-filter: blur(4px);
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
-
-    /* Bottom Controls */
     .controls button {
       margin: 0 0.8rem;
       padding: 12px 24px;
@@ -140,71 +132,100 @@
       box-shadow: 0 0 15px var(--neon-magenta);
     }
 
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    footer a {
+      margin: 0 1rem;
+      color: var(--neon-cyan);
+      font-size: 2rem;
+      text-shadow: 0 0 8px var(--neon-cyan);
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    footer a:hover {
+      color: var(--neon-magenta);
+      text-shadow: 0 0 12px var(--neon-magenta);
+    }
   </style>
 
-  <!-- Chart.js for plotting -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- MathJax for LaTeX rendering -->
-  <script
-    src="https://polyfill.io/v3/polyfill.min.js?features=es6"
-  ></script>
-  <script
-    id="MathJax-script"
-    async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-  ></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 </head>
 
 <body>
-
   <header>
     <div class="logo">
       <img
-        src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpbjd1dnZrN2RuaG1maGhvdzF1ejNqZnQyNm95Z3BhbmppdHV5ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3orieRlHJOwAaBrbzy/giphy.gif"
+        src="https://media1.giphy.com/media/3orieRlHJOwAaBrbzy/giphy.gif"
         alt="Simpsons GIF"
       />
     </div>
-
     <nav>
       <a href="#model">Model</a>
-      <a href="#chart">Chart</a>
-      <a href="https://your-docs.example.com" target="_blank">Docs</a>
+      <a href="https://www.shs-conferences.org/articles/shsconf/pdf/2024/08/shsconf_icdde2024_01009.pdf">Motivation</a>
+      <a href="https://support-tickets-s96yu6t6hpm.streamlit.app/" target="_blank">
+        Dashboard
+      </a>
     </nav>
-
     <div class="header-buttons">
-      <button id="btn-config">Configure</button>
-      <button id="btn-reset">Reset</button>
+      <button id="https://en.wikipedia.org/wiki/Sharpe_ratio">Sharpe Ratio - Wiki</button>
+      <button id="https://github.com/dsrichard97/support-tickets/tree/main">Github</button>
     </div>
   </header>
 
-
   <main>
-    <!-- LaTeX Equation -->
+    <section class="intro">
+      <h2>📈 Portfolio Simulation Dashboard</h2>
+      <p><em>Last Updated: July 26, 2025</em></p>
+      <p>
+        Dashboard configuration delivers an efficient Monte Carlo frontier analysis, a Markowitz portfolio optimizer, and robust VaR/CVaR risk metrics, all calibrated to US federal trading holidays in its annualization calculations. Two dedicated “Idea” tabs—Transaction Costs and Stress Testing—are included for future feature development. The underlying methodology is based on the Sharpe Ratio framework. All design elements and conceptual ideas are provided in the motivation tab. Take a look at Dashboard tab! Have fun!
+      </p>
+      <p>
+        <a href="https://support-tickets-s96yu6t6hpm.streamlit.app/"
+           style="color: var(--neon-cyan); text-decoration: underline;"
+           target="_blank">
+          ▶️ Launch Full Dashboard
+        </a>
+      </p>
+    </section>
+
     <div id="model" class="equation">
       \[
-        S(t) \;=\; S_0 \exp\!\Bigl(\bigl(\mu - \tfrac{\sigma^2}{2}\bigr)t + \sigma W_t\Bigr)
+        S(t) = S_0 \exp\!\Bigl(\bigl(\mu - \tfrac{\sigma^2}{2}\bigr)t + \sigma W_t\Bigr)
       \]
     </div>
 
-    <!-- Chart.js Canvas -->
     <div id="chart" class="chart-container">
       <canvas id="stockChart"></canvas>
     </div>
 
-    <!-- Generate Button -->
     <div class="controls">
       <button id="btn-generate">Generate Price Path</button>
     </div>
   </main>
 
+  <!-- Footer with GitHub & LinkedIn -->
+  <footer>
+    <a href="https://github.com/dsrichard97" target="_blank" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/richarddiazdeleon/" target="_blank" aria-label="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+  </footer>
 
   <script>
-    // Initialize empty Chart.js line chart
     const ctx = document.getElementById('stockChart').getContext('2d');
     const stockChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [],    // time steps
+        labels: [],
         datasets: [{
           label: 'Simulated Stock Price',
           data: [],
@@ -216,50 +237,44 @@
       },
       options: {
         scales: {
-          x: { 
-            title: { display: true, text: 'Time (t)' }, 
+          x: {
+            title: { display: true, text: 'Time (t)' },
             grid: { color: 'rgba(255,255,255,0.1)' }
           },
-          y: { 
-            title: { display: true, text: 'Price S(t)' }, 
+          y: {
+            title: { display: true, text: 'Price S(t)' },
             grid: { color: 'rgba(255,255,255,0.1)' }
           }
         },
-        plugins: {
-          legend: { display: false }
-        }
+        plugins: { legend: { display: false } }
       }
     });
 
-    // Utility: simulate a geometric Brownian motion path
     function simulateGBM(S0, mu, sigma, T, N) {
-      const dt = T/N;
+      const dt = T / N;
       const prices = [S0];
-      for(let i=1; i<=N; i++){
+      for (let i = 1; i <= N; i++) {
         const Z = Math.sqrt(dt) * (Math.random() * 2 - 1);
-        const St = prices[i-1] * Math.exp((mu - 0.5*sigma*sigma)*dt + sigma*Z);
-        prices.push(St);
+        prices.push(
+          prices[i - 1] * Math.exp((mu - 0.5 * sigma * sigma) * dt + sigma * Z)
+        );
       }
       return prices;
     }
 
-    // Button event handlers
     document.getElementById('btn-generate').onclick = () => {
-      const S0 = 100, mu = 0.05, sigma = 0.2, T = 1, N = 100;
-      const path = simulateGBM(S0, mu, sigma, T, N);
-      stockChart.data.labels = Array.from({length: path.length}, (_,i)=> (i*(T/N)).toFixed(2));
+      const path = simulateGBM(100, 0.05, 0.2, 1, 100);
+      stockChart.data.labels = path.map((_, i) => (i / 100).toFixed(2));
       stockChart.data.datasets[0].data = path;
       stockChart.update();
     };
-
     document.getElementById('btn-reset').onclick = () => {
       stockChart.data.labels = [];
       stockChart.data.datasets[0].data = [];
       stockChart.update();
     };
-
     document.getElementById('btn-config').onclick = () => {
-      alert('Open configuration modal (you can hook this up to show inputs for S₀, μ, σ, etc.)');
+      alert('Open configuration modal for S₀, μ, σ, etc.');
     };
   </script>
 </body>
