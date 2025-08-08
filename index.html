@@ -1,86 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Financial Acumen Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Futuristic Stock Model</title>
+
+  <!-- Futuristic Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
-    body {
+    :root {
+      --bg-start: #0f0f1e;
+      --bg-end:   #1a1a2e;
+      --neon-cyan: #00ffff;
+      --neon-magenta: #ff00ff;
+      --text-color: #e0e0e0;
+    }
+
+    /* Reset & Box-Sizing */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f1f4f9;
-      color: #333233;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text-color);
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Fixed Header */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 10px 20px;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    /* Simpsons GIF */
+    .logo img {
+      width: 80px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    /* Nav Links */
+    nav a {
+      margin-left: 1.2rem;
+      color: var(--neon-cyan);
+      text-decoration: none;
+      font-weight: bold;
+      text-shadow: 0 0 8px var(--neon-cyan);
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 12px var(--neon-magenta);
+    }
+
+    /* Configure/Reset Buttons */
+    .header-buttons button {
+      margin-left: 1rem;
+      padding: 6px 12px;
+      color: #000;
+      background: var(--neon-magenta);
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--neon-magenta);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .header-buttons button:hover {
+      transform: scale(1.05);
+      background: var(--neon-cyan);
+      box-shadow: 0 0 12px var(--neon-cyan);
+    }
+
+    /* Main Content */
+    main {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .container {
       text-align: center;
-      max-width: 80vw;
+      padding: 0 20px;
     }
 
-    .split {
-      opacity: 1; /* Ensure it's visible */
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-bottom: 20px;
+    /* Equation Styling */
+    .equation {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px var(--neon-magenta);
     }
 
-    .top-link {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #eb0ea5;
-      text-decoration: none;
+    /* Chart Container */
+    .chart-container {
+      width: 90vw;
+      max-width: 800px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 8px;
+      box-shadow: 0 0 20px var(--neon-cyan);
+      backdrop-filter: blur(4px);
+      margin-bottom: 1.5rem;
     }
 
-    .top-link:hover {
-      text-decoration: underline;
-      color: #c80d8e;
+    /* Bottom Controls */
+    .controls button {
+      margin: 0 0.8rem;
+      padding: 12px 24px;
+      font-size: 1rem;
+      color: #000;
+      background: var(--neon-cyan);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--neon-cyan);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .controls button:hover {
+      transform: scale(1.1);
+      background: var(--neon-magenta);
+      box-shadow: 0 0 15px var(--neon-magenta);
     }
 
-    .slider {
-      margin-top: 20px;
-      width: 100%;
-      max-width: 200px;
-    }
   </style>
+
+  <!-- Chart.js for plotting -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- MathJax for LaTeX rendering -->
+  <script
+    src="https://polyfill.io/v3/polyfill.min.js?features=es6"
+  ></script>
+  <script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  ></script>
 </head>
+
 <body>
 
-  <div class="container">
-    
-    <!-- Header -->
-    <h1 class="split">
-      Unlock your financial acumen! Click on the link below 👇
-    </h1>
-
-    <!-- Link with arrow -->
-    <div style="margin: 20px 0;">
-      ➡️ 
-      <a href="https://www.example.com" target="_blank" class="top-link">
-        Visit Financial Dashboard
-      </a>
+  <header>
+    <div class="logo">
+      <img
+        src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpbjd1dnZrN2RuaG1maGhvdzF1ejNqZnQyNm95Z3BhbmppdHV5ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3orieRlHJOwAaBrbzy/giphy.gif"
+        alt="Simpsons GIF"
+      />
     </div>
 
-    <!-- Celebratory GIF -->
-    <div style="margin-bottom: 20px;">
-      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpbjd1dnZrN2RuaG1maGhvdzF1ejNqZnQyNm95Z3BhbmppdHV5ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3orieRlHJOwAaBrbzy/giphy.gif"
-           alt="Finance Celebration"
-           width="300"
-           height="300"
-           style="border-radius: 10px;" />
+    <nav>
+      <a href="#model">Model</a>
+      <a href="#chart">Chart</a>
+      <a href="https://your-docs.example.com" target="_blank">Docs</a>
+    </nav>
+
+    <div class="header-buttons">
+      <button id="btn-config">Configure</button>
+      <button id="btn-reset">Reset</button>
+    </div>
+  </header>
+
+
+  <main>
+    <!-- LaTeX Equation -->
+    <div id="model" class="equation">
+      \[
+        S(t) \;=\; S_0 \exp\!\Bigl(\bigl(\mu - \tfrac{\sigma^2}{2}\bigr)t + \sigma W_t\Bigr)
+      \]
     </div>
 
-    <!-- Slider -->
-    <input type="range" id="speed" name="speed" min="1" max="6" step="1" value="1"
-           aria-labelledby="speed-label" class="slider" />
+    <!-- Chart.js Canvas -->
+    <div id="chart" class="chart-container">
+      <canvas id="stockChart"></canvas>
+    </div>
 
-  </div>
+    <!-- Generate Button -->
+    <div class="controls">
+      <button id="btn-generate">Generate Price Path</button>
+    </div>
+  </main>
 
+
+  <script>
+    // Initialize empty Chart.js line chart
+    const ctx = document.getElementById('stockChart').getContext('2d');
+    const stockChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],    // time steps
+        datasets: [{
+          label: 'Simulated Stock Price',
+          data: [],
+          borderColor: 'var(--neon-magenta)',
+          backgroundColor: 'rgba(255,0,255,0.2)',
+          tension: 0.25,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        scales: {
+          x: { 
+            title: { display: true, text: 'Time (t)' }, 
+            grid: { color: 'rgba(255,255,255,0.1)' }
+          },
+          y: { 
+            title: { display: true, text: 'Price S(t)' }, 
+            grid: { color: 'rgba(255,255,255,0.1)' }
+          }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Utility: simulate a geometric Brownian motion path
+    function simulateGBM(S0, mu, sigma, T, N) {
+      const dt = T/N;
+      const prices = [S0];
+      for(let i=1; i<=N; i++){
+        const Z = Math.sqrt(dt) * (Math.random() * 2 - 1);
+        const St = prices[i-1] * Math.exp((mu - 0.5*sigma*sigma)*dt + sigma*Z);
+        prices.push(St);
+      }
+      return prices;
+    }
+
+    // Button event handlers
+    document.getElementById('btn-generate').onclick = () => {
+      const S0 = 100, mu = 0.05, sigma = 0.2, T = 1, N = 100;
+      const path = simulateGBM(S0, mu, sigma, T, N);
+      stockChart.data.labels = Array.from({length: path.length}, (_,i)=> (i*(T/N)).toFixed(2));
+      stockChart.data.datasets[0].data = path;
+      stockChart.update();
+    };
+
+    document.getElementById('btn-reset').onclick = () => {
+      stockChart.data.labels = [];
+      stockChart.data.datasets[0].data = [];
+      stockChart.update();
+    };
+
+    document.getElementById('btn-config').onclick = () => {
+      alert('Open configuration modal (you can hook this up to show inputs for S₀, μ, σ, etc.)');
+    };
+  </script>
 </body>
 </html>
-
-
